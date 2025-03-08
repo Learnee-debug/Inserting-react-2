@@ -1,23 +1,44 @@
-// src/components/MovieCard.jsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./AddMovie.css";
 
-import React from 'react';
-import './MovieCard.css'; // Optional: Import CSS for styling
+const AddMovie = () => {
+  const navigate = useNavigate();
+  const [movie, setMovie] = useState({
+    title: "",
+    director: "",
+    genre: "",
+    releaseYear: "",
+    synopsis: "",
+    posterUrl: "",
+  });
 
-const MovieCard = ({ movie }) => {
-  const { title, director, genre, releaseYear, synopsis, posterUrl } = movie;
+  const handleChange = (e) => {
+    setMovie({ ...movie, [e.target.name]: e.target.value });
+  };
 
   return (
-    <div className="movie-card">
-      <img src={posterUrl} alt={`${title} Poster`} className="movie-poster" />
-      <div className="movie-details">
-        <h2 className="movie-title">{title}</h2>
-        <p><strong>Director:</strong> {director}</p>
-        <p><strong>Genre:</strong> {genre}</p>
-        <p><strong>Release Year:</strong> {releaseYear}</p>
-        <p className="movie-synopsis">{synopsis}</p>
-      </div>
+    <div className="add-movie-container">
+      <h1>Add Movie</h1>
+      <form>
+        <input type="text" name="title" placeholder="Title" onChange={handleChange} required />
+        <input type="text" name="director" placeholder="Director" onChange={handleChange} required />
+        <select name="genre" onChange={handleChange} required>
+          <option value="">Select Genre</option>
+          <option value="Action">Action</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Horror">Horror</option>
+        </select>
+        <input type="number" name="releaseYear" placeholder="Release Year" onChange={handleChange} required />
+        <textarea name="synopsis" placeholder="Synopsis" onChange={handleChange} required />
+        <input type="url" name="posterUrl" placeholder="Poster Image URL" onChange={handleChange} required />
+        
+        <button type="submit">Submit</button>
+        <button type="button" onClick={() => navigate("/")}>Cancel</button>
+      </form>
     </div>
   );
 };
 
-export default MovieCard;
+export default AddMovie;

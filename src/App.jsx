@@ -1,16 +1,25 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import MovieCard from "./MovieCard";
+import movies from "./moviesData";
+import "./Dashboard.css";
 
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
+const Dashboard = () => {
+  const navigate = useNavigate();
 
-const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-      </Routes>
-    </Router>
+    <div className="dashboard-container">
+      <h1>Movie Collection</h1>
+      <button className="add-movie-button" onClick={() => navigate("/add-movie")}>
+        Add Movie
+      </button>
+      <div className="movies-grid">
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default App;
+export default Dashboard;
